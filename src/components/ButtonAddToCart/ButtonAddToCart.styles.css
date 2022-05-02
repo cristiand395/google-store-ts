@@ -1,0 +1,19 @@
+.buttonAddToCard {  
+  border: 1px solid #4285F4;
+  border-radius: 5px;
+  padding: 7px 13px;
+  color: #4285F4;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+}
+.buttonAddToCard:hover {  
+  background-color: #4285F4;
+  border-radius: 5px;
+  padding: 7px 13px;
+  color: white;
+  font-weight: bold;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+}
