@@ -5,6 +5,7 @@ import CartModal from '../CartModal/CartModal.component';
 import { ProductContext } from '../../context/ProductContext/ProductContext';
 import { ProductContextType } from '../../context/ProductContext/@types';
 import './Header.styles.css';
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { cart } = useContext(ProductContext) as ProductContextType;
@@ -24,7 +25,9 @@ const Header = () => {
           height={50}
         />
       </div>
-      <div className='title'>Google Store</div>
+      <Link
+        to='/'
+        className='title'>Google Store</Link>
       <div className='cartSection'
         onClick={toggleCartModal}>
         <IconContext.Provider value={{ color: "gray", className:'iconCart' }}> 

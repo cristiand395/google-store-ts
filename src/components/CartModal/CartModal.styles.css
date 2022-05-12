@@ -7,7 +7,7 @@
   position: absolute;
   top: 250%;
   right: 0%;
-  padding: 5px 10px 15px 5px;
+  padding: 15px 10px 15px 5px;
 }
 
 
@@ -42,3 +42,8 @@
   border-radius: 10px;
 }
 
+.emptyCart {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
