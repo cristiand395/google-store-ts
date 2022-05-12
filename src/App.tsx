@@ -1,16 +1,17 @@
-import Header from './components/Header/Header.component'
-import SearchBar from './components/SearchBar/SearchBar.component'
-import ProductProvider from './context/ProductContext/ProductContext'
-import CardList from './components/CardList/CardList.component'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import DevicePage from './pages/DevicePage';
+
 import './App.css';
 
 function App() {
   return (
-    <ProductProvider>
-      <Header/>
-      <SearchBar/>
-      <CardList/>
-    </ProductProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='deviceName' element={<DevicePage/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

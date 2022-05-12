@@ -1,4 +1,4 @@
-import { createContext, FC, ReactNode, useState, Reducer } from "react";
+import { createContext, FC, ReactNode, useState} from "react";
 import { ProductContextType, Product, CartItem } from './@types'
 import useInitialProductsState from '../../hooks/useInitialProductsState';
 
@@ -39,24 +39,6 @@ const ProductProvider: FC<MyContext> = ({ children }) => {
 
 
 
-  function cartReducer(state: CartItem[], action: CartAction)  {
-    const { type, payload } = action
-    switch (type) {
-      case CartActionKind.ADD:
-        if (state.length === 0) {
-          state.push(payload)
-        } else {
-          state.map(item => {
-            if (item.name === payload.name) {
-              item.quantity += 1
-            }
-          })}
-        return state
-      default:
-        return state
-    }
-  }
-
   return (
     <ProductContext.Provider value={{
       products,
@@ -64,7 +46,6 @@ const ProductProvider: FC<MyContext> = ({ children }) => {
       setSearchValue,
       filteredProducts,
       cart,
-      cartReducer
     }}>
       {children}
     </ProductContext.Provider>

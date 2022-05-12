@@ -3,7 +3,7 @@ import { ProductContext } from '../../context/ProductContext/ProductContext';
 
 import './ButtonAddToCart.styles.css';
 
-const ButtonAddCard = ({...props}) => {
+const ButtonAddToCard = ({...props}) => {
   // const { handleAddToCart, cart } = useContext(ProductContext);
 
   // const handleButtonAddToCart = () => {
@@ -22,4 +22,4 @@ const ButtonAddCard = ({...props}) => {
   );
 }
 
-export default ButtonAddCard;
+export default ButtonAddToCard;

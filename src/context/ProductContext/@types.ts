@@ -18,7 +18,7 @@ export interface Product {
   image: string;
   specs: ProductSpecs;
 }
-export type CartItem = {
+export interface CartItem  {
   id: string;
   name: string;
   image: string;
@@ -33,7 +33,6 @@ export type ProductContextType = {
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
   filteredProducts: Product[];
   cart: CartItem[];
-  cartReducer: CartItem;
 }
 
 export type SearchValue = string;
