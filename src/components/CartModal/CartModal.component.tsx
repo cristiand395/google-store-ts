@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ProductContext } from '../../context/ProductContext/ProductContext';
-import { ProductContextType } from '../../context/ProductContext/@types';
+import { ProductContextType } from '../../context/ProductContext/@ProductContextTypes';
 import CartModalItem from "./CartModalItem";
 import './CartModal.styles.css'
 

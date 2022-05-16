@@ -3,9 +3,12 @@ import { IconContext } from "react-icons";
 import { BsFillCartFill } from "react-icons/bs";
 import CartModal from '../CartModal/CartModal.component';
 import { ProductContext } from '../../context/ProductContext/ProductContext';
-import { ProductContextType } from '../../context/ProductContext/@types';
-import './Header.styles.css';
+import { ProductContextType } from '../../context/ProductContext/@ProductContextTypes';
 import { Link } from "react-router-dom";
+import { UserContext } from "../../context/UserContext/UserContext";
+import { UserContextType } from "../../context/UserContext/@UserContextTypes";
+
+import './Header.styles.css';
 
 const Header = () => {
   const { cart } = useContext(ProductContext) as ProductContextType;
@@ -13,7 +16,7 @@ const Header = () => {
   const toggleCartModal = () => {
     setShowCartModal(!showCartModal);
   }
-
+  const { userName } = useContext(UserContext) as UserContextType;
 
   return (
     <div className='header'>
@@ -30,6 +33,15 @@ const Header = () => {
         className='title'>Google Store</Link>
       <div className='cartSection'
         onClick={toggleCartModal}>
+        {userName === ''
+          ?
+            <Link
+            to='/sign-in'
+            className='loginLink'>Sign In</Link>
+          :
+            <p className='user-name'>Hi, {userName}</p>
+        }
+        
         <IconContext.Provider value={{ color: "gray", className:'iconCart' }}> 
           <BsFillCartFill />
         </IconContext.Provider>

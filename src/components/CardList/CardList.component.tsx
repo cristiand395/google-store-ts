@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import Card from '../Card/Card.component';
 import { ProductContext }  from '../../context/ProductContext/ProductContext';
-import { ProductContextType } from '../../context/ProductContext/@types';
+import { ProductContextType } from '../../context/ProductContext/@ProductContextTypes';
 
 import './CardList.styles.css';
 

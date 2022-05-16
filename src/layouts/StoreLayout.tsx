@@ -1,12 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header.component";
 
+import './StoreLayout.css'
 const StoreLayout = () => {
   return (
-    <>
-    <Header/>
-    <Outlet/>
-    </>
+    <div className='store-page-container'>
+      <Header/>
+      <Outlet/>
+    </div>
   );
 }
 

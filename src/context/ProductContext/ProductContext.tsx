@@ -1,5 +1,5 @@
 import { createContext, FC, ReactNode, useState} from "react";
-import { ProductContextType, Product, CartItem } from './@types'
+import { ProductContextType, Product, CartItem } from './@ProductContextTypes'
 import useInitialProductsState from '../../hooks/useInitialProductsState';
 
 interface MyContext {
@@ -36,7 +36,6 @@ const ProductProvider: FC<MyContext> = ({ children }) => {
     type: CartActionKind;
     payload: CartItem;
   }
-
 
 
   return (
