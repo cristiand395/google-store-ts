@@ -25,6 +25,8 @@ const UserProvider: FC<MyContext> = ({ children }) => {
     navigate('/')
   }
 
+  
+
   return (
     <UserContext.Provider value={{
       userName,

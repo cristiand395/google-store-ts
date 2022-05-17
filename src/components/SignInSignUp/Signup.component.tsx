@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CreateAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
+import { 
+  CreateAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+  signInWithGooglePopup} from '../../utils/firebase/firebase.utils';
 import './SignInSignUp.styles.css'
 
 const defaultFormFields = {
@@ -14,6 +17,15 @@ const SignUp = ()  => {
   const [formFields, setFormFields] = useState(defaultFormFields)
   const { displayName, email, password, confirmPassword } = formFields
 
+  const SignInWithGoogle = async () => {
+    const { user } = await signInWithGooglePopup()
+    await createUserDocumentFromAuth(user)
+  }
+
+  const resetFormfields = ()  => {
+    setFormFields(defaultFormFields)
+  }
+
   const handleSubmit = async (e:any) => {
     e.preventDefault()
     if (password !== confirmPassword) {
@@ -21,11 +33,24 @@ const SignUp = ()  => {
       return
     }
     try {
-      // const { user } = await CreateAuthUserWithEmailAndPassword(email, password)
-      // await user.updateProfile({ displayName })
-      // setFormFields(defaultFormFields)
-    } catch (error) {
-      console.log('error: ', error)
+      const { user } = await CreateAuthUserWithEmailAndPassword(email, password)
+      await createUserDocumentFromAuth(user, { displayName })
+      resetFormfields()
+    } catch (error:any) {
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          alert('Email already in use')
+          break
+        case 'auth/invalid-email':
+          alert('Invalid email')
+          break
+        case 'auth/weak-password':
+          alert('Password is too weak')
+          break
+        default:
+          console.log('error: ', error)
+          break
+      }
     }
   }
 
@@ -37,11 +62,11 @@ const SignUp = ()  => {
 
   return (
     <form
-      onSubmit={() => {}}
+      onSubmit={handleSubmit}
       className='formContainer'>
       <input
-        className='formInput'
         placeholder='Name'
+        className='formInput'
         type='text'
         name='displayName'
         value={displayName}
@@ -50,8 +75,8 @@ const SignUp = ()  => {
         ></input>
 
       <input
-        className='formInput'
         placeholder='Email'
+        className='formInput'
         type='email'
         name='email'
         value={email}
@@ -60,8 +85,8 @@ const SignUp = ()  => {
         ></input>
 
       <input
-        className='formInput'
         placeholder='Password'
+        className='formInput'
         type='password'
         name='password'
         value={password}
@@ -70,8 +95,8 @@ const SignUp = ()  => {
         ></input>
 
       <input
-        className='formInput'
         placeholder='Confirm Password'
+        className='formInput'
         type='password'
         name='confirmPassword'
         value={confirmPassword}
@@ -83,7 +108,9 @@ const SignUp = ()  => {
         type='submit'
         className='buttonEnter'>Sign Up</button>
       <button
-          className="buttonGoogle">Sign Up With Google </button>
+          className="buttonGoogle"
+          onClick={SignInWithGoogle}
+          type='button'>Sign Up With Google </button>
       <Link
         to='/sign-in'
         className='signup-option'>Are you already have an account?</Link>
