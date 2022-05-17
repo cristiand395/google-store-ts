@@ -9,6 +9,20 @@ import { UserContext } from "../../context/UserContext/UserContext";
 import { UserContextType } from "../../context/UserContext/@UserContextTypes";
 
 import './Header.styles.css';
+import { signOutUser } from "../../utils/firebase/firebase.utils";
+
+const UserName = ({userName}:any) => {
+  return (
+    <>
+      {(userName.includes(' ')) 
+        ?
+        <p className='user-name'>Hi, {userName.split(' ')[0]}</p>
+        :
+        <p className='user-name'>Hi, {userName}</p>
+      }
+    </>
+  )
+}
 
 const Header = () => {
   const { cart } = useContext(ProductContext) as ProductContextType;
@@ -16,7 +30,8 @@ const Header = () => {
   const toggleCartModal = () => {
     setShowCartModal(!showCartModal);
   }
-  const { userName } = useContext(UserContext) as UserContextType;
+  const { currentUser, userName } = useContext(UserContext) as UserContextType;
+
 
   return (
     <div className='header'>
@@ -31,25 +46,35 @@ const Header = () => {
       <Link
         to='/'
         className='title'>Google Store</Link>
-      <div className='cartSection'
-        onClick={toggleCartModal}>
-        {userName === ''
+      <div className='userCartSection'>
+        {currentUser === null
           ?
             <Link
             to='/sign-in'
             className='loginLink'>Sign In</Link>
           :
-            <p className='user-name'>Hi, {userName}</p>
+            <UserName
+              userName={userName}/>
         }
-        
-        <IconContext.Provider value={{ color: "gray", className:'iconCart' }}> 
-          <BsFillCartFill />
-        </IconContext.Provider>
-        {
-          cart.length >=1 && <div className='cartCounter'>{cart.length}</div>
-          }
+        <div className='cartSection'
+          onClick={toggleCartModal}>
+          <IconContext.Provider value={{ color: "gray", className:'iconCart' }}
+            > 
+            <BsFillCartFill />
+          </IconContext.Provider>
+          {
+            cart.length >=1 && <div className='cartCounter'>{cart.length}</div>
+            }
 
-        {showCartModal && <CartModal />}
+          {showCartModal && <CartModal />}      
+        </div>
+        {currentUser !== null 
+            &&
+          <p 
+            className='logout'
+            onClick={signOutUser}
+            >Sign Out</p> 
+        }
       </div>
     </div>
   );

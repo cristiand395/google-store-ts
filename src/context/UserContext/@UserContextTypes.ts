@@ -1,5 +1,7 @@
 export type UserContextType = {
+  currentUser: any;
+  setCurrentUser: any;
   userName: string;
-  loginWithGoogle: () => void;
+  setUserName: any;
 }
 

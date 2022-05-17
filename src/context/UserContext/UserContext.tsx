@@ -1,7 +1,6 @@
-import { createContext, FC, ReactNode, useState} from "react";
-import { useNavigate } from "react-router-dom";
-import { createUserDocumentFromAuth, signInWithGooglePopup } from "../../utils/firebase/firebase.utils";
+import { createContext, FC, ReactNode, useEffect, useState} from "react";
 import { UserContextType } from './@UserContextTypes';
+import { createUserDocumentFromAuth, onAuthStateChangedListener } from '../../utils/firebase/firebase.utils';
 
 interface MyContext {
   children?: ReactNode;
@@ -10,27 +9,26 @@ interface MyContext {
 export const UserContext = createContext<UserContextType | null>(null)
 
 const UserProvider: FC<MyContext> = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null)
   const [userName, setUserName] = useState('')
-  let navigate = useNavigate()
 
-  const loginWithGoogle = async()=> {
-    const { user } = await signInWithGooglePopup()
-    console.log('user: ',user)
-    const userDocRef = await createUserDocumentFromAuth(user)
-    console.log('userName: ', user.displayName)
-    console.log('userDocRef: ', userDocRef)
-    const fullName = user.displayName
-    const firstName = fullName.split(' ')[0] 
-    setUserName(firstName)
-    navigate('/')
-  }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user:any)=> {
+      if(user){
+        createUserDocumentFromAuth(user)
+      }
+      setCurrentUser(user)
+    })
 
-  
+    return unsubscribe
+  }, [])
 
   return (
     <UserContext.Provider value={{
+      currentUser,
+      setCurrentUser,
       userName,
-      loginWithGoogle,
+      setUserName
     }}>
       {children}
     </UserContext.Provider>

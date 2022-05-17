@@ -17,7 +17,7 @@
   margin-left: 10px;
 }
 
-.cartSection {
+.userCartSection {
   position: relative;
   cursor: pointer;
   display: flex;
@@ -48,6 +48,13 @@
 
 .user-name {
   color: #5f6368;
+  font-weight: bold;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.logout {
+  color: #5f6368;
   font-weight: semi-bold;
-  font-size: 13px
+  font-size: 11px
 }

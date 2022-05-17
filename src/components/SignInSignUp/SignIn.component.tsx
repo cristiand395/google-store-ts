@@ -1,7 +1,9 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext/UserContext';
-import { CreateAuthUserWithEmailAndPassword, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../utils/firebase/firebase.utils';
+import { 
+  signInAuthUserWithEmailAndPassword, 
+  signInWithGooglePopup } from '../../utils/firebase/firebase.utils';
 import './SignInSignUp.styles.css'
 
 const defaultFormFields = {
@@ -10,9 +12,13 @@ const defaultFormFields = {
 }
 
 const SignIn = ()  => {
+  const { setUserName } = useContext(UserContext)
+  let navigate = useNavigate()
+
   const SignInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup()
-    await createUserDocumentFromAuth(user)
+    const {user} = await signInWithGooglePopup()
+    setUserName(user.displayName)
+    navigate('/')
   }
 
   const [formFields, setFormFields] = useState(defaultFormFields)
@@ -25,9 +31,13 @@ const SignIn = ()  => {
   const handleSubmit = async (e:any) => {
     e.preventDefault()
     try {
-      const response = await signInAuthUserWithEmailAndPassword(email, password)
-      console.log(response)
+      await signInAuthUserWithEmailAndPassword(
+        email, 
+        password
+      )
+      //setCurrentUser(user)
       resetFormfields()
+      navigate('/')
     } catch (error:any) {
       switch (error.code) {
         case 'auth/user-not-found':

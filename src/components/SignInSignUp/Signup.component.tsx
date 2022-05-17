@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext/UserContext';
 import { 
   CreateAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -14,12 +15,16 @@ const defaultFormFields = {
 }
 
 const SignUp = ()  => {
+  const { setUserName } = useContext(UserContext)
+
   const [formFields, setFormFields] = useState(defaultFormFields)
   const { displayName, email, password, confirmPassword } = formFields
 
+  let navigate = useNavigate()
+
   const SignInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup()
-    await createUserDocumentFromAuth(user)
+    await signInWithGooglePopup()
+    navigate('/')
   }
 
   const resetFormfields = ()  => {
@@ -33,9 +38,13 @@ const SignUp = ()  => {
       return
     }
     try {
-      const { user } = await CreateAuthUserWithEmailAndPassword(email, password)
-      await createUserDocumentFromAuth(user, { displayName })
+      const { user } = await CreateAuthUserWithEmailAndPassword(
+        email, 
+        password
+      )
+      await createUserDocumentFromAuth({...user,  displayName })
       resetFormfields()
+      setUserName(displayName)
     } catch (error:any) {
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -52,6 +61,7 @@ const SignUp = ()  => {
           break
       }
     }
+    navigate('/')
   }
 
 
