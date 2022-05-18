@@ -1,0 +1,17 @@
+.checkoutItem-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.checkoutItem-img-container {
+}
+.checkoutItem-img {
+  width: 100px;
+}
+
+.checkoutItem-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

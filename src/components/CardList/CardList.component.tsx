@@ -13,14 +13,8 @@ const CardList = () => {
     <div className="card-list">
       {products.map(product => (
         <Card
+          product={product}
           key={product.id}
-          id={product.id}
-          name={product.name}
-          type={product.type}
-          price={product.price}
-          currency={product.currency}
-          image={product.image}
-          specs={product.specs}
         />
       ))}
     </div>

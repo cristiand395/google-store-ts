@@ -1,8 +1,8 @@
-
 import './CartModalItem.styles.css'
+import CounterButton from '../CounterButton/CounterButton.component';
 
-const CartModalItem = (props:any) => {
-  const { imgUrl, name, price, cart } = props;
+const CartModalItem = ({item}:any) => {
+const { imgUrl, name, price, quantity } = item;
 
   return (
     <div className='cartModalItem'>
@@ -13,9 +13,12 @@ const CartModalItem = (props:any) => {
         alt={name}/>
       <p className='itemName'>{name}</p>
       <div className='cartModalCounter'>
-        <button className='counterButton'>-</button>
-        <p>{cart}</p>
-        <button className='counterButton'>+</button>
+        <CounterButton
+          mode='-'/>
+        <p>{quantity}</p>
+        <CounterButton
+          mode='+'/>
+        <span>${price*quantity}</span>
       </div>
     </div>
   );

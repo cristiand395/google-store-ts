@@ -35,7 +35,6 @@ const SignIn = ()  => {
         email, 
         password
       )
-      //setCurrentUser(user)
       resetFormfields()
       navigate('/')
     } catch (error:any) {

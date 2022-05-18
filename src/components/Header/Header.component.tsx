@@ -2,8 +2,8 @@ import { useState, useContext } from "react";
 import { IconContext } from "react-icons";
 import { BsFillCartFill } from "react-icons/bs";
 import CartModal from '../CartModal/CartModal.component';
-import { ProductContext } from '../../context/ProductContext/ProductContext';
-import { ProductContextType } from '../../context/ProductContext/@ProductContextTypes';
+import { CartContext } from '../../context/CartContext/CartContext';
+import { CartContextType } from '../../context/CartContext/@CartContextTypes';
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext/UserContext";
 import { UserContextType } from "../../context/UserContext/@UserContextTypes";
@@ -25,7 +25,7 @@ const UserName = ({userName}:any) => {
 }
 
 const Header = () => {
-  const { cart } = useContext(ProductContext) as ProductContextType;
+  const { cartItems } = useContext(CartContext)
   const [showCartModal, setShowCartModal] = useState(false);
   const toggleCartModal = () => {
     setShowCartModal(!showCartModal);
@@ -56,16 +56,16 @@ const Header = () => {
             <UserName
               userName={userName}/>
         }
-        <div className='cartSection'
+        <div 
+          className='cartSection'
           onClick={toggleCartModal}>
           <IconContext.Provider value={{ color: "gray", className:'iconCart' }}
             > 
             <BsFillCartFill />
           </IconContext.Provider>
           {
-            cart.length >=1 && <div className='cartCounter'>{cart.length}</div>
-            }
-
+            cartItems.length >=1 && <div className='cartCounter'>{cartItems.length}</div>
+          }
           {showCartModal && <CartModal />}      
         </div>
         {currentUser !== null 

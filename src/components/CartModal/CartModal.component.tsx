@@ -1,51 +1,41 @@
 import { useContext } from 'react';
-import { ProductContext } from '../../context/ProductContext/ProductContext';
-import { ProductContextType } from '../../context/ProductContext/@ProductContextTypes';
+import { CartContext } from '../../context/CartContext/CartContext';
+import { CartContextType } from '../../context/CartContext/@CartContextTypes';
 import CartModalItem from "./CartModalItem";
 import './CartModal.styles.css'
+import { useNavigate } from 'react-router-dom';
 
 const CartModal = () => {
-  const { cart } = useContext(ProductContext) as ProductContextType;
-
-
-
+  const { cartItems, cartCountPrice } = useContext(CartContext) as CartContextType;
+  const navigate = useNavigate()
+  const goToCheckout = () => {
+    navigate('/checkout')
+    console.log('goToCheckout')
+  }
   return (
     <div className='cartModal'>
       <div className='cartModalContent'>
         <h4 className='title'>Shopping Cart</h4>
-        {cart.length === 0 ? <p className='emptyCart'>Your cart is empty</p> : (
+        {cartItems.length === 0 ? <p className='emptyCart'>Your cart is empty</p> : (
           <>
-            {cart.map(item => (
+            {cartItems.map(item => (
               <CartModalItem
                 key={item.id}
-                imgUrl={item.image}
-                name={item.name}
-                price={item.price}
+                item={item}
                 />
             ))}
             
-            <h5 className='total'>Total: $1499</h5>
+            <h5 className='total'>Total: ${cartCountPrice}</h5>
             
             <div className='payButtonContainer'>
-              <button className='payButton'>Pay</button>
+              <button 
+                className='payButton'
+                onClick={goToCheckout}>
+                Pay
+              </button>
             </div>
           </>
         )}
-
-        {cart.map(item => (
-          <CartModalItem
-            key={item.id}
-            imgUrl={item.image}
-            name={item.name}
-            price={item.price}
-            />
-        ))}
-        
-        <h5 className='total'>Total: $1499</h5>
-        
-        <div className='payButtonContainer'>
-          <button className='payButton'>Pay</button>
-        </div>
       </div>
     </div>
   );

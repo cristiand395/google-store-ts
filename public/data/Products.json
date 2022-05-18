@@ -5,7 +5,7 @@
     "type" : "Smartphone",
     "price" : 899,
     "currency" : "USD",
-    "image" : "https://lh3.googleusercontent.com/7xDKqr2GZurzh__CoEG82FmIUtqzRfK15aN9SFTOc1mv2u77s9owuPB4t83z0kLUzeg9X97n62AZKZnCRYy055piFLSEsCIMqUQ=rw-e365-w240",
+    "imgUrl" : "https://lh3.googleusercontent.com/7xDKqr2GZurzh__CoEG82FmIUtqzRfK15aN9SFTOc1mv2u77s9owuPB4t83z0kLUzeg9X97n62AZKZnCRYy055piFLSEsCIMqUQ=rw-e365-w240",
     "specs" : {
       "cpu" : "Google Tensor",
       "ram" : "12gb",
@@ -23,7 +23,7 @@
     "type" : "Smartphone",
     "price" : 649,
     "currency" : "USD",
-    "image" : "https://lh3.googleusercontent.com/UOmuiQoCacXIgDdME4KnhEWeqrgssIqq_Bp11sgL4n3qymmUXV0JeZhvyHcH0lXzIlGe_5WVX2vw8jWxJXVL32PaEiFFVNtWg10=rw-e365-w240",
+    "imgUrl" : "https://lh3.googleusercontent.com/UOmuiQoCacXIgDdME4KnhEWeqrgssIqq_Bp11sgL4n3qymmUXV0JeZhvyHcH0lXzIlGe_5WVX2vw8jWxJXVL32PaEiFFVNtWg10=rw-e365-w240",
     "specs" : {
       "cpu" : "Google Tensor",
       "ram" : "8gb",

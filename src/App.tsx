@@ -5,12 +5,14 @@ import DevicePage from './pages/DevicePage';
 import './App.css';
 import StoreLayout from './layouts/StoreLayout';
 import SignInSignUp from './pages/SignInSignUp/SignInSignUp';
+import Checkout from './pages/Checkout/Checkout';
 
 function App() {
   return (
     <Routes>
       <Route path='/' element={<StoreLayout/>}>
         <Route index element={<Home/>}/>
+        <Route path='/checkout' element={<Checkout/>}/>
         <Route path='/devices/:deviceName' element={<DevicePage/>}/>  
       </Route>
       <Route path='/sign-in' element={<SignInSignUp/>}/>

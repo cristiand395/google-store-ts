@@ -2,3 +2,8 @@
   padding-left: 15px;
   padding-right: 15px;
 }
+
+.contentPage {
+  display: flex;
+  justify-content: center;
+}
