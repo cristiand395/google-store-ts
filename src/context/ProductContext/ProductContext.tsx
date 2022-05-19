@@ -1,6 +1,9 @@
-import { createContext, FC, ReactNode, useState} from "react";
+import { createContext, FC, ReactNode, useEffect, useState} from "react";
 import { ProductContextType, Product, CartItem } from './@ProductContextTypes'
 import useInitialProductsState from '../../hooks/useInitialProductsState';
+
+import PRODUCTS_DATA from '../../utils/firebase/Products'
+import { addCollectionAndDocuments } from "../../utils/firebase/firebase.utils";
 
 interface MyContext {
   children?: ReactNode;
@@ -13,6 +16,10 @@ const ProductProvider: FC<MyContext> = ({ children }) => {
   const [searchValue, setSearchValue] = useState('')
   let filteredProducts: Product[] = []
   let cart: CartItem[] = []
+
+  // useEffect(() => {
+  //   addCollectionAndDocuments('products', PRODUCTS_DATA)
+  // },[])
 
   if (searchValue.length === 0) {
     filteredProducts = products
