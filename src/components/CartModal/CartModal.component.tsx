@@ -10,7 +10,6 @@ const CartModal = () => {
   const navigate = useNavigate()
   const goToCheckout = () => {
     navigate('/checkout')
-    console.log('goToCheckout')
   }
   return (
     <div className='cartModal'>
@@ -31,7 +30,7 @@ const CartModal = () => {
               <button 
                 className='payButton'
                 onClick={goToCheckout}>
-                Pay
+                Go Checkout
               </button>
             </div>
           </>

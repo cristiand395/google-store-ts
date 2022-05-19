@@ -30,6 +30,7 @@ const Header = () => {
   const toggleCartModal = () => {
     setShowCartModal(!showCartModal);
   }
+  console.log(showCartModal)
   const { currentUser, userName } = useContext(UserContext) as UserContextType;
 
 

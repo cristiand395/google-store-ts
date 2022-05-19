@@ -14,10 +14,16 @@ const { imgUrl, name, price, quantity } = item;
       <p className='itemName'>{name}</p>
       <div className='cartModalCounter'>
         <CounterButton
-          mode='-'/>
+          sign='-'
+          type='decrease'
+          item={item}
+          />
         <p>{quantity}</p>
         <CounterButton
-          mode='+'/>
+          sign='+'
+          type='add'
+          item={item}
+          />
         <span>${price*quantity}</span>
       </div>
     </div>

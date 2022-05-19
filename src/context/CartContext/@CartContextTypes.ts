@@ -11,6 +11,9 @@ export type CartItem = {
 export interface CartContextType {
   cartItems: CartItem[],
   addItemToCart: any,
+  removeItemFromCart: any,
+  clearCartItems: any,
   cartCountItems: number,
   cartCountPrice: number,
+  cartTotal: number
 }

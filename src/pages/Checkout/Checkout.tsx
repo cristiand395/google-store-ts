@@ -5,12 +5,15 @@ import { CartContext } from "../../context/CartContext/CartContext";
 import './Checkout.styles.css'
 
 const Checkout = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, cartTotal } = useContext(CartContext);
 
   return (
     <div
       className='checkout-page'>
-        <div className='checkout-container'>
+        { cartItems.length === 0
+          ? <h3>Your cart its empty</h3>
+          :
+          <div className='checkout-container'>
           {
             cartItems.map(cartItem => (
               <CheckoutItem 
@@ -18,7 +21,17 @@ const Checkout = () => {
                 cartItem={cartItem} />
             ))
           }
+          <div className='total-container'>
+            <h4><strong>Total: </strong>${cartTotal}</h4>
+          </div>
+          <div className='payButton-container'>
+            <button 
+              className='payButton'>
+              Pay
+            </button>
+          </div>
         </div>
+        }
     </div>
   );
 }
