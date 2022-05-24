@@ -5,10 +5,7 @@ import ButtonAddToCart from '../ButtonAddToCart/ButtonAddToCart.component';
 import  './Card.styles.css'
 
 const Card = ({product}:any) => {
-  const { name, price, imgUrl } = product;
-  const { addItemToCart} = useContext(CartContext)
-
-  const addProductToCart = () => addItemToCart(product)
+  const { name, price, imgUrl } = product
 
   return (
     <div className='card'>
@@ -29,8 +26,7 @@ const Card = ({product}:any) => {
       <div className='bottomCard'>
         <p className='price'>${price}</p>
         <ButtonAddToCart
-          addToCart={addProductToCart} 
-          itemName={name}/>
+          product={product}/>
       </div>
     </div>
   );

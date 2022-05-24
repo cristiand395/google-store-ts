@@ -12,10 +12,10 @@ const DeviceInfo = () => {
 
   return (
     <div className="DeviceInfo">
-      <div>
+      <div className='image-container'>
         <img
           alt={product?.name} 
-          src={product?.image}/>
+          src={product?.imgUrl}/>
       </div>
       <div className='deviceInfoBox'> 
         <div>
@@ -29,7 +29,8 @@ const DeviceInfo = () => {
           <p><strong>Storage: </strong>{product?.specs?.storage}</p>
           <p><strong>OS: </strong>{product?.specs?.os}</p>
           <div className="buttonContainer">
-            <ButtonAddToCart/>
+            <ButtonAddToCart
+              product={product}/>
           </div>
         </div>
       </div>

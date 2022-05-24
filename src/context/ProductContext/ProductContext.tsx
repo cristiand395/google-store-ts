@@ -3,7 +3,7 @@ import { ProductContextType, Product, CartItem } from './@ProductContextTypes'
 import useInitialProductsState from '../../hooks/useInitialProductsState';
 
 import PRODUCTS_DATA from '../../utils/firebase/Products'
-import { addCollectionAndDocuments } from "../../utils/firebase/firebase.utils";
+import { addCollectionAndDocuments, getProductsAndDocuments } from "../../utils/firebase/firebase.utils";
 
 interface MyContext {
   children?: ReactNode;
@@ -12,14 +12,25 @@ interface MyContext {
 export const ProductContext = createContext<ProductContextType | null>(null)
 
 const ProductProvider: FC<MyContext> = ({ children }) => {
-  const products: Product[] = useInitialProductsState()
+  //const products: Product[] = useInitialProductsState()
+  const [products, setProducts] = useState<Product[]>([])
+
   const [searchValue, setSearchValue] = useState('')
+  
   let filteredProducts: Product[] = []
   let cart: CartItem[] = []
 
   // useEffect(() => {
   //   addCollectionAndDocuments('products', PRODUCTS_DATA)
   // },[])
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const products = await getProductsAndDocuments()
+      setProducts(products)
+    }
+    getProducts()
+  },[])
 
   if (searchValue.length === 0) {
     filteredProducts = products
