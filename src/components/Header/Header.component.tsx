@@ -16,9 +16,9 @@ const UserName = ({userName}:any) => {
     <>
       {(userName.includes(' ')) 
         ?
-        <p className='user-name'>Hi, {userName.split(' ')[0]}</p>
+        <p className='user-name'>Hi {userName.split(' ')[0]}</p>
         :
-        <p className='user-name'>Hi, {userName}</p>
+        <p className='user-name'>Hi {userName}</p>
       }
     </>
   )
