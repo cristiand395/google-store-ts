@@ -29,8 +29,9 @@ export interface CartItem  {
 
 export type ProductContextType = {  
   products: Product[];
+  setProducts: any;
   searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  setSearchValue: any;
   filteredProducts: Product[];
   cart: CartItem[];
 }

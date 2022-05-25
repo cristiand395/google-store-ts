@@ -1,9 +1,10 @@
-import { createContext, FC, ReactNode, useEffect, useState} from "react";
+import { createContext, FC, ReactNode, useEffect, useReducer, useState} from "react";
 import { ProductContextType, Product, CartItem } from './@ProductContextTypes'
 import useInitialProductsState from '../../hooks/useInitialProductsState';
 
 import PRODUCTS_DATA from '../../utils/firebase/Products'
 import { addCollectionAndDocuments, getProductsAndDocuments } from "../../utils/firebase/firebase.utils";
+import { connectFirestoreEmulator } from "firebase/firestore";
 
 interface MyContext {
   children?: ReactNode;
@@ -11,15 +12,62 @@ interface MyContext {
 
 export const ProductContext = createContext<ProductContextType | null>(null)
 
+const INITIAL_STATE: ProductContextType = {
+  products: [],
+  setProducts: null,
+  searchValue: '',
+  setSearchValue: null,
+  filteredProducts: [],
+  cart: []
+}
+
+const PRODUCT_ACTION_TYPES = {
+  SET_PRODUCTS: 'SET_PRODUCTS',
+  SET_SEARCH_VALUE: 'SET_SEARCH_VALUE',
+}
+
+
+
+
+const ProductReducer = (state = INITIAL_STATE, action:any) => {
+  const { type, payload } = action
+  switch (type) {
+    case PRODUCT_ACTION_TYPES.SET_PRODUCTS:
+      return {
+        ...state,
+        products: payload
+      }
+    case PRODUCT_ACTION_TYPES.SET_SEARCH_VALUE:
+      return {
+        ...state,
+        searchValue: payload,
+      }
+    default:
+      throw new Error(`${type} is not a Product Action Type`)
+    }
+}
+
 const ProductProvider: FC<MyContext> = ({ children }) => {
-  //const products: Product[] = useInitialProductsState()
-  const [products, setProducts] = useState<Product[]>([])
+  const [ state, dispatch ] = useReducer(ProductReducer, INITIAL_STATE)
 
-  const [searchValue, setSearchValue] = useState('')
-  
-  let filteredProducts: Product[] = []
-  let cart: CartItem[] = []
+  const { products, searchValue, cart } = state
+  let { filteredProducts } = state
 
+  const setSearchValue = (searchValue:string) =>{
+    dispatch({
+      type: PRODUCT_ACTION_TYPES.SET_SEARCH_VALUE,
+      payload: searchValue,
+    })
+  }
+
+  const setProducts = (products:Product[]) =>{
+    dispatch({
+      type: PRODUCT_ACTION_TYPES.SET_PRODUCTS,
+      payload: products,
+    })
+  }
+
+  // UPDATE DATA TO FIREBASE
   // useEffect(() => {
   //   addCollectionAndDocuments('products', PRODUCTS_DATA)
   // },[])
@@ -32,33 +80,28 @@ const ProductProvider: FC<MyContext> = ({ children }) => {
     getProducts()
   },[])
 
+  let newFilteredProducts:any = []
   if (searchValue.length === 0) {
     filteredProducts = products
   } else {
-    products.filter(product => {
+    products.filter((product: Product) => {
       const productName = product.name.toLowerCase()
       const searchText = searchValue.toLowerCase();
-      if (productName.includes(searchText)){  
-        filteredProducts.push(product)
+      if (productName.includes(searchText)){
+        console.log(`${productName} includes ${searchText}`)
+        
+        newFilteredProducts.push(product)
       };
-      return filteredProducts
+      console.log('new ', newFilteredProducts)
+      return filteredProducts = newFilteredProducts
     });
-  }
-
-  enum CartActionKind {
-    ADD = 'ADD',
-    REMOVE = 'REMOVE'
-  }
-
-  interface CartAction {
-    type: CartActionKind;
-    payload: CartItem;
   }
 
 
   return (
     <ProductContext.Provider value={{
       products,
+      setProducts,
       searchValue,
       setSearchValue,
       filteredProducts,
