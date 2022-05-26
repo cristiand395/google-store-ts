@@ -1,10 +1,8 @@
-import { createContext, FC, ReactNode, useEffect, useReducer, useState} from "react";
-import { ProductContextType, Product, CartItem } from './@ProductContextTypes'
-import useInitialProductsState from '../../hooks/useInitialProductsState';
+import { createContext, FC, ReactNode, useEffect, useReducer } from "react";
+import { ProductContextType, Product } from './@ProductContextTypes'
 
 import PRODUCTS_DATA from '../../utils/firebase/Products'
 import { addCollectionAndDocuments, getProductsAndDocuments } from "../../utils/firebase/firebase.utils";
-import { connectFirestoreEmulator } from "firebase/firestore";
 
 interface MyContext {
   children?: ReactNode;
@@ -26,9 +24,6 @@ const PRODUCT_ACTION_TYPES = {
   SET_SEARCH_VALUE: 'SET_SEARCH_VALUE',
 }
 
-
-
-
 const ProductReducer = (state = INITIAL_STATE, action:any) => {
   const { type, payload } = action
   switch (type) {
@@ -48,6 +43,12 @@ const ProductReducer = (state = INITIAL_STATE, action:any) => {
 }
 
 const ProductProvider: FC<MyContext> = ({ children }) => {
+  // UPDATE DATA TO FIREBASE
+  // useEffect(() => {
+  //   addCollectionAndDocuments('products', PRODUCTS_DATA)
+  // },[])
+
+
   const [ state, dispatch ] = useReducer(ProductReducer, INITIAL_STATE)
 
   const { products, searchValue, cart } = state
@@ -66,11 +67,6 @@ const ProductProvider: FC<MyContext> = ({ children }) => {
       payload: products,
     })
   }
-
-  // UPDATE DATA TO FIREBASE
-  // useEffect(() => {
-  //   addCollectionAndDocuments('products', PRODUCTS_DATA)
-  // },[])
 
   useEffect(() => {
     const getProducts = async () => {

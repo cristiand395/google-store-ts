@@ -15,5 +15,5 @@ export interface CartContextType {
   clearCartItems: any,
   cartCountItems: number,
   cartCountPrice: number,
-  cartTotal: number
+  cartTotal: number,
 }
